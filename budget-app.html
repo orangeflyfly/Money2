@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="zh-TW">
 <head>
 <meta charset="UTF-8">
@@ -28,437 +29,441 @@
     --safe-bottom: env(safe-area-inset-bottom, 0px);
   }
 
-  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+- { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 
-  body {
-    font-family: 'Noto Sans TC', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    height: 100dvh;
-    overflow: hidden;
-    user-select: none;
-  }
+body {
+font-family: ‘Noto Sans TC’, sans-serif;
+background: var(–bg);
+color: var(–text);
+height: 100dvh;
+overflow: hidden;
+user-select: none;
+}
 
-  /* ── Layout ── */
-  #app { display: flex; flex-direction: column; height: 100dvh; }
+/* ── Layout ── */
+#app { display: flex; flex-direction: column; height: 100dvh; }
 
-  .pages { flex: 1; overflow: hidden; position: relative; }
+.pages { flex: 1; overflow: hidden; position: relative; }
 
-  .page {
-    position: absolute; inset: 0;
-    overflow-y: auto;
-    padding: 0 0 calc(var(--tab-h) + var(--safe-bottom) + 16px);
-    opacity: 0; pointer-events: none;
-    transition: opacity .2s;
-    -webkit-overflow-scrolling: touch;
-  }
-  .page.active { opacity: 1; pointer-events: auto; }
+.page {
+position: absolute; inset: 0;
+overflow-y: auto;
+padding: 0 0 calc(var(–tab-h) + var(–safe-bottom) + 16px);
+opacity: 0; pointer-events: none;
+transition: opacity .2s;
+-webkit-overflow-scrolling: touch;
+}
+.page.active { opacity: 1; pointer-events: auto; }
 
-  /* ── Tab Bar ── */
-  .tab-bar {
-    position: fixed; bottom: 0; left: 0; right: 0;
-    height: calc(var(--tab-h) + var(--safe-bottom));
-    padding-bottom: var(--safe-bottom);
-    background: rgba(15,15,16,.92);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-top: 1px solid var(--border);
-    display: flex; align-items: center; justify-content: space-around;
-    z-index: 100;
-  }
+/* ── Tab Bar ── */
+.tab-bar {
+position: fixed; bottom: 0; left: 0; right: 0;
+height: calc(var(–tab-h) + var(–safe-bottom));
+padding-bottom: var(–safe-bottom);
+background: rgba(15,15,16,.92);
+backdrop-filter: blur(20px);
+-webkit-backdrop-filter: blur(20px);
+border-top: 1px solid var(–border);
+display: flex; align-items: center; justify-content: space-around;
+z-index: 100;
+}
 
-  .tab {
-    flex: 1; display: flex; flex-direction: column;
-    align-items: center; gap: 4px;
-    padding: 10px 0;
-    cursor: pointer; border: none; background: none;
-    color: var(--text3);
-    font-family: 'Noto Sans TC', sans-serif;
-    font-size: 10px; font-weight: 500;
-    transition: color .2s;
-    position: relative;
-  }
-  .tab.active { color: var(--accent); }
-  .tab svg { width: 22px; height: 22px; stroke-width: 1.8; }
+.tab {
+flex: 1; display: flex; flex-direction: column;
+align-items: center; gap: 4px;
+padding: 10px 0;
+cursor: pointer; border: none; background: none;
+color: var(–text3);
+font-family: ‘Noto Sans TC’, sans-serif;
+font-size: 10px; font-weight: 500;
+transition: color .2s;
+position: relative;
+}
+.tab.active { color: var(–accent); }
+.tab svg { width: 22px; height: 22px; stroke-width: 1.8; }
 
-  /* scan tab special */
-  .tab.scan-tab {
-    flex: 0 0 64px;
-  }
-  .tab.scan-tab .scan-btn {
-    width: 52px; height: 52px;
-    border-radius: 50%;
-    background: var(--accent);
-    display: flex; align-items: center; justify-content: center;
-    margin-top: -18px;
-    box-shadow: 0 0 24px rgba(168,255,120,.4);
-    transition: transform .15s, box-shadow .15s;
-  }
-  .tab.scan-tab .scan-btn svg { stroke: #0f0f10; width: 24px; height: 24px; }
-  .tab.scan-tab.active .scan-btn,
-  .tab.scan-tab:active .scan-btn { transform: scale(.94); box-shadow: 0 0 12px rgba(168,255,120,.3); }
-  .tab.scan-tab span { color: var(--text3); margin-top: 2px; }
-  .tab.scan-tab.active span { color: var(--accent); }
+/* scan tab special */
+.tab.scan-tab {
+flex: 0 0 64px;
+}
+.tab.scan-tab .scan-btn {
+width: 52px; height: 52px;
+border-radius: 50%;
+background: var(–accent);
+display: flex; align-items: center; justify-content: center;
+margin-top: -18px;
+box-shadow: 0 0 24px rgba(168,255,120,.4);
+transition: transform .15s, box-shadow .15s;
+}
+.tab.scan-tab .scan-btn svg { stroke: #0f0f10; width: 24px; height: 24px; }
+.tab.scan-tab.active .scan-btn,
+.tab.scan-tab:active .scan-btn { transform: scale(.94); box-shadow: 0 0 12px rgba(168,255,120,.3); }
+.tab.scan-tab span { color: var(–text3); margin-top: 2px; }
+.tab.scan-tab.active span { color: var(–accent); }
 
-  /* ── Page Header ── */
-  .page-header {
-    padding: 60px 20px 20px;
-    position: sticky; top: 0; z-index: 10;
-    background: linear-gradient(to bottom, var(--bg) 80%, transparent);
-  }
-  .page-header h1 { font-size: 28px; font-weight: 700; letter-spacing: -.5px; }
-  .page-header .subtitle { color: var(--text2); font-size: 13px; margin-top: 4px; }
+/* ── Page Header ── */
+.page-header {
+padding: 60px 20px 20px;
+position: sticky; top: 0; z-index: 10;
+background: linear-gradient(to bottom, var(–bg) 80%, transparent);
+}
+.page-header h1 { font-size: 28px; font-weight: 700; letter-spacing: -.5px; }
+.page-header .subtitle { color: var(–text2); font-size: 13px; margin-top: 4px; }
 
-  /* ── Cards ── */
-  .card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 20px;
-    margin: 0 16px 12px;
-  }
+/* ── Cards ── */
+.card {
+background: var(–surface);
+border: 1px solid var(–border);
+border-radius: var(–radius);
+padding: 20px;
+margin: 0 16px 12px;
+}
 
-  /* ── HOME PAGE ── */
-  .home-hero {
-    margin: 56px 16px 0;
-    background: linear-gradient(135deg, #1e2e1e, #1a1a1e);
-    border: 1px solid rgba(168,255,120,.2);
-    border-radius: 24px;
-    padding: 28px 24px;
-    position: relative;
-    overflow: hidden;
-  }
-  .home-hero::before {
-    content: '';
-    position: absolute; top: -40px; right: -40px;
-    width: 180px; height: 180px;
-    background: radial-gradient(circle, rgba(168,255,120,.15) 0%, transparent 70%);
-    border-radius: 50%;
-  }
-  .home-hero .label { font-size: 12px; color: var(--text2); letter-spacing: 1px; text-transform: uppercase; }
-  .home-hero .amount {
-    font-family: 'DM Mono', monospace;
-    font-size: 44px; font-weight: 500;
-    color: var(--accent);
-    margin: 8px 0 4px;
-    letter-spacing: -1px;
-  }
-  .home-hero .budget-bar-wrap { margin-top: 16px; }
-  .home-hero .budget-label { display: flex; justify-content: space-between; font-size: 11px; color: var(--text2); margin-bottom: 6px; }
-  .budget-bar { height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; }
-  .budget-fill { height: 100%; background: var(--accent); border-radius: 2px; transition: width .6s cubic-bezier(.4,0,.2,1); }
+/* ── HOME PAGE ── */
+.home-hero {
+margin: 56px 16px 0;
+background: linear-gradient(135deg, #1e2e1e, #1a1a1e);
+border: 1px solid rgba(168,255,120,.2);
+border-radius: 24px;
+padding: 28px 24px;
+position: relative;
+overflow: hidden;
+}
+.home-hero::before {
+content: ‘’;
+position: absolute; top: -40px; right: -40px;
+width: 180px; height: 180px;
+background: radial-gradient(circle, rgba(168,255,120,.15) 0%, transparent 70%);
+border-radius: 50%;
+}
+.home-hero .label { font-size: 12px; color: var(–text2); letter-spacing: 1px; text-transform: uppercase; }
+.home-hero .amount {
+font-family: ‘DM Mono’, monospace;
+font-size: 44px; font-weight: 500;
+color: var(–accent);
+margin: 8px 0 4px;
+letter-spacing: -1px;
+}
+.home-hero .budget-bar-wrap { margin-top: 16px; }
+.home-hero .budget-label { display: flex; justify-content: space-between; font-size: 11px; color: var(–text2); margin-bottom: 6px; }
+.budget-bar { height: 4px; background: var(–border); border-radius: 2px; overflow: hidden; }
+.budget-fill { height: 100%; background: var(–accent); border-radius: 2px; transition: width .6s cubic-bezier(.4,0,.2,1); }
 
-  .stats-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 12px 16px; }
-  .stat-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 16px;
-  }
-  .stat-card .s-label { font-size: 11px; color: var(--text2); margin-bottom: 6px; }
-  .stat-card .s-val { font-family: 'DM Mono', monospace; font-size: 20px; font-weight: 500; }
-  .stat-card .s-val.green { color: var(--green); }
-  .stat-card .s-val.orange { color: var(--accent3); }
+.stats-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 12px 16px; }
+.stat-card {
+background: var(–surface);
+border: 1px solid var(–border);
+border-radius: var(–radius);
+padding: 16px;
+}
+.stat-card .s-label { font-size: 11px; color: var(–text2); margin-bottom: 6px; }
+.stat-card .s-val { font-family: ‘DM Mono’, monospace; font-size: 20px; font-weight: 500; }
+.stat-card .s-val.green { color: var(–green); }
+.stat-card .s-val.orange { color: var(–accent3); }
 
-  .section-title {
-    font-size: 13px; font-weight: 600; color: var(--text2);
-    letter-spacing: .5px; text-transform: uppercase;
-    padding: 8px 20px 0;
-  }
+.section-title {
+font-size: 13px; font-weight: 600; color: var(–text2);
+letter-spacing: .5px; text-transform: uppercase;
+padding: 8px 20px 0;
+}
 
-  .tx-item {
-    display: flex; align-items: center; gap: 14px;
-    padding: 14px 20px;
-    border-bottom: 1px solid var(--border);
-    cursor: pointer;
-    transition: background .15s;
-  }
-  .tx-item:last-child { border-bottom: none; }
-  .tx-item:active { background: var(--surface2); }
+.tx-item {
+display: flex; align-items: center; gap: 14px;
+padding: 14px 20px;
+border-bottom: 1px solid var(–border);
+cursor: pointer;
+transition: background .15s;
+}
+.tx-item:last-child { border-bottom: none; }
+.tx-item:active { background: var(–surface2); }
 
-  .tx-icon {
-    width: 40px; height: 40px; border-radius: 12px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 18px; flex-shrink: 0;
-  }
-  .tx-info { flex: 1; min-width: 0; }
-  .tx-name { font-size: 14px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .tx-meta { font-size: 12px; color: var(--text2); margin-top: 2px; }
-  .tx-amount { font-family: 'DM Mono', monospace; font-size: 15px; font-weight: 500; color: var(--red); white-space: nowrap; }
-  .tx-amount.income { color: var(--green); }
+.tx-icon {
+width: 40px; height: 40px; border-radius: 12px;
+display: flex; align-items: center; justify-content: center;
+font-size: 18px; flex-shrink: 0;
+}
+.tx-info { flex: 1; min-width: 0; }
+.tx-name { font-size: 14px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tx-meta { font-size: 12px; color: var(–text2); margin-top: 2px; }
+.tx-amount { font-family: ‘DM Mono’, monospace; font-size: 15px; font-weight: 500; color: var(–red); white-space: nowrap; }
+.tx-amount.income { color: var(–green); }
 
-  /* FAB */
-  .fab {
-    position: fixed; right: 20px; bottom: calc(var(--tab-h) + var(--safe-bottom) + 16px);
-    width: 52px; height: 52px; border-radius: 50%;
-    background: var(--text); color: var(--bg);
-    border: none; cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 4px 20px rgba(0,0,0,.4);
-    z-index: 50;
-    transition: transform .15s;
-    font-size: 24px; font-weight: 300;
-  }
-  .fab:active { transform: scale(.92); }
+/* FAB */
+.fab {
+position: fixed; right: 20px; bottom: calc(var(–tab-h) + var(–safe-bottom) + 16px);
+width: 52px; height: 52px; border-radius: 50%;
+background: var(–text); color: var(–bg);
+border: none; cursor: pointer;
+display: flex; align-items: center; justify-content: center;
+box-shadow: 0 4px 20px rgba(0,0,0,.4);
+z-index: 50;
+transition: transform .15s;
+font-size: 24px; font-weight: 300;
+}
+.fab:active { transform: scale(.92); }
 
-  /* ── RECORDS PAGE ── */
-  .filter-row {
-    display: flex; gap: 8px;
-    padding: 0 16px 16px;
-    overflow-x: auto;
-    scrollbar-width: none;
-  }
-  .filter-row::-webkit-scrollbar { display: none; }
-  .filter-chip {
-    flex-shrink: 0;
-    padding: 6px 14px;
-    border-radius: 20px;
-    border: 1px solid var(--border);
-    background: var(--surface);
-    color: var(--text2);
-    font-size: 13px; cursor: pointer;
-    transition: all .15s;
-    font-family: 'Noto Sans TC', sans-serif;
-  }
-  .filter-chip.active {
-    background: var(--accent); color: #0f0f10;
-    border-color: var(--accent); font-weight: 600;
-  }
+/* ── RECORDS PAGE ── */
+.filter-row {
+display: flex; gap: 8px;
+padding: 0 16px 16px;
+overflow-x: auto;
+scrollbar-width: none;
+}
+.filter-row::-webkit-scrollbar { display: none; }
+.filter-chip {
+flex-shrink: 0;
+padding: 6px 14px;
+border-radius: 20px;
+border: 1px solid var(–border);
+background: var(–surface);
+color: var(–text2);
+font-size: 13px; cursor: pointer;
+transition: all .15s;
+font-family: ‘Noto Sans TC’, sans-serif;
+}
+.filter-chip.active {
+background: var(–accent); color: #0f0f10;
+border-color: var(–accent); font-weight: 600;
+}
 
-  .day-group { margin-bottom: 4px; }
-  .day-header {
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 8px 20px;
-    font-size: 12px; color: var(--text2);
-    font-weight: 500;
-  }
-  .day-header .day-total { font-family: 'DM Mono', monospace; }
+.day-group { margin-bottom: 4px; }
+.day-header {
+display: flex; justify-content: space-between; align-items: center;
+padding: 8px 20px;
+font-size: 12px; color: var(–text2);
+font-weight: 500;
+}
+.day-header .day-total { font-family: ‘DM Mono’, monospace; }
 
-  /* ── SCAN PAGE ── */
-  .scan-area {
-    margin: 20px 16px;
-    background: var(--surface);
-    border: 2px dashed var(--border);
-    border-radius: 24px;
-    padding: 40px 20px;
-    display: flex; flex-direction: column; align-items: center; gap: 16px;
-    position: relative;
-    overflow: hidden;
-  }
-  .scan-area.scanning { border-color: var(--accent); border-style: solid; }
-  .scan-area .scan-icon { font-size: 48px; }
-  .scan-area p { color: var(--text2); font-size: 14px; text-align: center; }
+/* ── SCAN PAGE ── */
+.scan-area {
+margin: 20px 16px;
+background: var(–surface);
+border: 2px dashed var(–border);
+border-radius: 24px;
+padding: 40px 20px;
+display: flex; flex-direction: column; align-items: center; gap: 16px;
+position: relative;
+overflow: hidden;
+}
+.scan-area.scanning { border-color: var(–accent); border-style: solid; }
+.scan-area .scan-icon { font-size: 48px; }
+.scan-area p { color: var(–text2); font-size: 14px; text-align: center; }
 
-  #scanVideo {
-    width: 100%; border-radius: 16px;
-    display: none; aspect-ratio: 1;
-    object-fit: cover;
-  }
-  .scan-area.scanning #scanVideo { display: block; }
-  .scan-area.scanning .scan-placeholder { display: none; }
+#scanVideo {
+width: 100%; border-radius: 16px;
+display: none; aspect-ratio: 1;
+object-fit: cover;
+}
+.scan-area.scanning #scanVideo { display: block; }
+.scan-area.scanning .scan-placeholder { display: none; }
 
-  .scan-frame {
-    position: absolute; inset: 20px;
-    pointer-events: none; display: none;
-  }
-  .scan-area.scanning .scan-frame { display: block; }
-  .scan-corner {
-    position: absolute; width: 24px; height: 24px;
-    border-color: var(--accent); border-style: solid;
-  }
-  .scan-corner.tl { top: 0; left: 0; border-width: 3px 0 0 3px; border-radius: 4px 0 0 4px; }
-  .scan-corner.tr { top: 0; right: 0; border-width: 3px 3px 0 0; border-radius: 0 4px 0 0; }
-  .scan-corner.bl { bottom: 0; left: 0; border-width: 0 0 3px 3px; border-radius: 0 0 0 4px; }
-  .scan-corner.br { bottom: 0; right: 0; border-width: 0 3px 3px 0; border-radius: 0 0 4px 0; }
+.scan-frame {
+position: absolute; inset: 20px;
+pointer-events: none; display: none;
+}
+.scan-area.scanning .scan-frame { display: block; }
+.scan-corner {
+position: absolute; width: 24px; height: 24px;
+border-color: var(–accent); border-style: solid;
+}
+.scan-corner.tl { top: 0; left: 0; border-width: 3px 0 0 3px; border-radius: 4px 0 0 4px; }
+.scan-corner.tr { top: 0; right: 0; border-width: 3px 3px 0 0; border-radius: 0 4px 0 0; }
+.scan-corner.bl { bottom: 0; left: 0; border-width: 0 0 3px 3px; border-radius: 0 0 0 4px; }
+.scan-corner.br { bottom: 0; right: 0; border-width: 0 3px 3px 0; border-radius: 0 0 4px 0; }
 
-  .btn {
-    display: flex; align-items: center; justify-content: center; gap: 8px;
-    padding: 14px 28px;
-    border-radius: 14px;
-    border: none; cursor: pointer;
-    font-family: 'Noto Sans TC', sans-serif;
-    font-size: 15px; font-weight: 600;
-    transition: transform .15s, opacity .15s;
-    width: 100%;
-  }
-  .btn:active { transform: scale(.97); opacity: .85; }
-  .btn-primary { background: var(--accent); color: #0f0f10; }
-  .btn-secondary { background: var(--surface2); color: var(--text); border: 1px solid var(--border); }
-  .btn-danger { background: rgba(255,107,107,.15); color: var(--red); border: 1px solid rgba(255,107,107,.3); }
+.btn {
+display: flex; align-items: center; justify-content: center; gap: 8px;
+padding: 14px 28px;
+border-radius: 14px;
+border: none; cursor: pointer;
+font-family: ‘Noto Sans TC’, sans-serif;
+font-size: 15px; font-weight: 600;
+transition: transform .15s, opacity .15s;
+width: 100%;
+}
+.btn:active { transform: scale(.97); opacity: .85; }
+.btn-primary { background: var(–accent); color: #0f0f10; }
+.btn-secondary { background: var(–surface2); color: var(–text); border: 1px solid var(–border); }
+.btn-danger { background: rgba(255,107,107,.15); color: var(–red); border: 1px solid rgba(255,107,107,.3); }
 
-  .scan-result {
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 20px;
-    margin: 0 16px;
-  }
-  .scan-result h3 { font-size: 14px; color: var(--text2); margin-bottom: 12px; }
-  .result-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 14px; }
-  .result-row:last-child { border-bottom: none; }
-  .result-row .r-label { color: var(--text2); }
-  .result-row .r-val { font-weight: 500; font-family: 'DM Mono', monospace; }
+.scan-result {
+background: var(–surface2);
+border: 1px solid var(–border);
+border-radius: 16px;
+padding: 20px;
+margin: 0 16px;
+}
+.scan-result h3 { font-size: 14px; color: var(–text2); margin-bottom: 12px; }
+.result-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(–border); font-size: 14px; }
+.result-row:last-child { border-bottom: none; }
+.result-row .r-label { color: var(–text2); }
+.result-row .r-val { font-weight: 500; font-family: ‘DM Mono’, monospace; }
 
-  /* ── STATS PAGE ── */
-  .pie-container {
-    display: flex; flex-direction: column; align-items: center;
-    padding: 20px;
-  }
-  svg.donut { overflow: visible; }
+/* ── STATS PAGE ── */
+.pie-container {
+display: flex; flex-direction: column; align-items: center;
+padding: 20px;
+}
+svg.donut { overflow: visible; }
 
-  .legend { width: 100%; margin-top: 20px; }
-  .legend-item {
-    display: flex; align-items: center; gap: 10px;
-    padding: 10px 0; border-bottom: 1px solid var(--border);
-  }
-  .legend-item:last-child { border-bottom: none; }
-  .legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
-  .legend-name { flex: 1; font-size: 14px; }
-  .legend-pct { font-size: 13px; color: var(--text2); font-family: 'DM Mono', monospace; }
-  .legend-amt { font-size: 14px; font-weight: 500; font-family: 'DM Mono', monospace; }
+.legend { width: 100%; margin-top: 20px; }
+.legend-item {
+display: flex; align-items: center; gap: 10px;
+padding: 10px 0; border-bottom: 1px solid var(–border);
+}
+.legend-item:last-child { border-bottom: none; }
+.legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.legend-name { flex: 1; font-size: 14px; }
+.legend-pct { font-size: 13px; color: var(–text2); font-family: ‘DM Mono’, monospace; }
+.legend-amt { font-size: 14px; font-weight: 500; font-family: ‘DM Mono’, monospace; }
 
-  .seg-ctrl {
-    display: flex; background: var(--surface); border-radius: 10px; padding: 3px;
-    margin: 0 16px 16px;
-  }
-  .seg-btn {
-    flex: 1; padding: 8px; border-radius: 8px; border: none;
-    background: none; color: var(--text2);
-    font-family: 'Noto Sans TC', sans-serif;
-    font-size: 13px; font-weight: 500;
-    cursor: pointer; transition: all .2s;
-  }
-  .seg-btn.active { background: var(--surface2); color: var(--text); }
+.seg-ctrl {
+display: flex; background: var(–surface); border-radius: 10px; padding: 3px;
+margin: 0 16px 16px;
+}
+.seg-btn {
+flex: 1; padding: 8px; border-radius: 8px; border: none;
+background: none; color: var(–text2);
+font-family: ‘Noto Sans TC’, sans-serif;
+font-size: 13px; font-weight: 500;
+cursor: pointer; transition: all .2s;
+}
+.seg-btn.active { background: var(–surface2); color: var(–text); }
 
-  /* payment bars */
-  .pay-bar-item { padding: 12px 0; border-bottom: 1px solid var(--border); }
-  .pay-bar-item:last-child { border-bottom: none; }
-  .pay-bar-top { display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 8px; }
-  .pay-bar-track { height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; }
-  .pay-bar-fill { height: 100%; border-radius: 3px; transition: width .6s cubic-bezier(.4,0,.2,1); }
+/* payment bars */
+.pay-bar-item { padding: 12px 0; border-bottom: 1px solid var(–border); }
+.pay-bar-item:last-child { border-bottom: none; }
+.pay-bar-top { display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 8px; }
+.pay-bar-track { height: 6px; background: var(–border); border-radius: 3px; overflow: hidden; }
+.pay-bar-fill { height: 100%; border-radius: 3px; transition: width .6s cubic-bezier(.4,0,.2,1); }
 
-  /* ── SETTINGS PAGE ── */
-  .settings-section { margin-bottom: 8px; }
-  .settings-header { font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: 1px; padding: 16px 20px 8px; }
-  .setting-row {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 16px 20px;
-    border-bottom: 1px solid var(--border);
-    background: var(--surface);
-  }
-  .setting-row:first-of-type { border-radius: var(--radius) var(--radius) 0 0; margin-top: 0; }
-  .setting-row:last-of-type { border-bottom: none; border-radius: 0 0 var(--radius) var(--radius); }
-  .setting-row:only-of-type { border-radius: var(--radius); }
-  .settings-section .card { padding: 0; overflow: hidden; }
-  .s-row-info .s-row-title { font-size: 14px; font-weight: 500; }
-  .s-row-info .s-row-sub { font-size: 12px; color: var(--text2); margin-top: 2px; }
-  .s-row-right { color: var(--text2); font-size: 14px; font-family: 'DM Mono', monospace; }
-  .toggle {
-    width: 44px; height: 26px; border-radius: 13px;
-    background: var(--border); position: relative; cursor: pointer;
-    transition: background .2s; border: none; flex-shrink: 0;
-  }
-  .toggle.on { background: var(--accent); }
-  .toggle::after {
-    content: ''; position: absolute;
-    top: 3px; left: 3px;
-    width: 20px; height: 20px; border-radius: 50%;
-    background: white;
-    transition: transform .2s;
-  }
-  .toggle.on::after { transform: translateX(18px); }
+/* ── SETTINGS PAGE ── */
+.settings-section { margin-bottom: 8px; }
+.settings-header { font-size: 11px; color: var(–text3); text-transform: uppercase; letter-spacing: 1px; padding: 16px 20px 8px; }
+.setting-row {
+display: flex; align-items: center; justify-content: space-between;
+padding: 16px 20px;
+border-bottom: 1px solid var(–border);
+background: var(–surface);
+}
+.setting-row:first-of-type { border-radius: var(–radius) var(–radius) 0 0; margin-top: 0; }
+.setting-row:last-of-type { border-bottom: none; border-radius: 0 0 var(–radius) var(–radius); }
+.setting-row:only-of-type { border-radius: var(–radius); }
+.settings-section .card { padding: 0; overflow: hidden; }
+.s-row-info .s-row-title { font-size: 14px; font-weight: 500; }
+.s-row-info .s-row-sub { font-size: 12px; color: var(–text2); margin-top: 2px; }
+.s-row-right { color: var(–text2); font-size: 14px; font-family: ‘DM Mono’, monospace; }
+.toggle {
+width: 44px; height: 26px; border-radius: 13px;
+background: var(–border); position: relative; cursor: pointer;
+transition: background .2s; border: none; flex-shrink: 0;
+}
+.toggle.on { background: var(–accent); }
+.toggle::after {
+content: ‘’; position: absolute;
+top: 3px; left: 3px;
+width: 20px; height: 20px; border-radius: 50%;
+background: white;
+transition: transform .2s;
+}
+.toggle.on::after { transform: translateX(18px); }
 
-  /* ── MODAL ── */
-  .modal-backdrop {
-    position: fixed; inset: 0; background: rgba(0,0,0,.6);
-    backdrop-filter: blur(4px);
-    z-index: 200;
-    display: flex; align-items: flex-end;
-    opacity: 0; pointer-events: none;
-    transition: opacity .25s;
-  }
-  .modal-backdrop.open { opacity: 1; pointer-events: auto; }
-  .modal {
-    width: 100%; background: var(--surface);
-    border-radius: 24px 24px 0 0;
-    padding: 16px 20px calc(20px + var(--safe-bottom));
-    transform: translateY(100%);
-    transition: transform .3s cubic-bezier(.4,0,.2,1);
-  }
-  .modal-backdrop.open .modal { transform: translateY(0); }
-  .modal-handle { width: 36px; height: 4px; background: var(--border); border-radius: 2px; margin: 0 auto 20px; }
-  .modal h2 { font-size: 18px; font-weight: 700; margin-bottom: 20px; }
+/* ── MODAL ── */
+.modal-backdrop {
+position: fixed; inset: 0; background: rgba(0,0,0,.6);
+backdrop-filter: blur(4px);
+z-index: 200;
+display: flex; align-items: flex-end;
+opacity: 0; pointer-events: none;
+transition: opacity .25s;
+}
+.modal-backdrop.open { opacity: 1; pointer-events: auto; }
+.modal {
+width: 100%; background: var(–surface);
+border-radius: 24px 24px 0 0;
+padding: 16px 20px calc(20px + var(–safe-bottom));
+transform: translateY(100%);
+transition: transform .3s cubic-bezier(.4,0,.2,1);
+}
+.modal-backdrop.open .modal { transform: translateY(0); }
+.modal-handle { width: 36px; height: 4px; background: var(–border); border-radius: 2px; margin: 0 auto 20px; }
+.modal h2 { font-size: 18px; font-weight: 700; margin-bottom: 20px; }
 
-  .form-group { margin-bottom: 16px; }
-  .form-label { font-size: 12px; color: var(--text2); margin-bottom: 6px; display: block; letter-spacing: .5px; }
-  .form-input {
-    width: 100%; background: var(--surface2);
-    border: 1px solid var(--border); border-radius: 12px;
-    padding: 12px 14px; color: var(--text);
-    font-family: 'Noto Sans TC', sans-serif;
-    font-size: 15px;
-    outline: none;
-    transition: border-color .2s;
-    -webkit-appearance: none;
-  }
-  .form-input:focus { border-color: var(--accent); }
-  .form-input::placeholder { color: var(--text3); }
+.form-group { margin-bottom: 16px; }
+.form-label { font-size: 12px; color: var(–text2); margin-bottom: 6px; display: block; letter-spacing: .5px; }
+.form-input {
+width: 100%; background: var(–surface2);
+border: 1px solid var(–border); border-radius: 12px;
+padding: 12px 14px; color: var(–text);
+font-family: ‘Noto Sans TC’, sans-serif;
+font-size: 15px;
+outline: none;
+transition: border-color .2s;
+-webkit-appearance: none;
+}
+.form-input:focus { border-color: var(–accent); }
+.form-input::placeholder { color: var(–text3); }
 
-  .cat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
-  .cat-btn {
-    display: flex; flex-direction: column; align-items: center; gap: 4px;
-    padding: 10px 4px; border-radius: 12px;
-    border: 1px solid var(--border); background: var(--surface2);
-    cursor: pointer; font-size: 20px;
-    font-family: 'Noto Sans TC', sans-serif;
-    transition: all .15s;
-  }
-  .cat-btn span { font-size: 10px; color: var(--text2); }
-  .cat-btn.selected { border-color: var(--accent); background: rgba(168,255,120,.1); }
+.cat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.cat-btn {
+display: flex; flex-direction: column; align-items: center; gap: 4px;
+padding: 10px 4px; border-radius: 12px;
+border: 1px solid var(–border); background: var(–surface2);
+cursor: pointer; font-size: 20px;
+font-family: ‘Noto Sans TC’, sans-serif;
+transition: all .15s;
+}
+.cat-btn span { font-size: 10px; color: var(–text2); }
+.cat-btn.selected { border-color: var(–accent); background: rgba(168,255,120,.1); }
 
-  .pay-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 4px; }
-  .pay-btn {
-    padding: 10px 4px; border-radius: 12px;
-    border: 1px solid var(--border); background: var(--surface2);
-    color: var(--text); font-size: 13px; cursor: pointer;
-    font-family: 'Noto Sans TC', sans-serif;
-    transition: all .15s;
-  }
-  .pay-btn.selected { border-color: var(--accent2); background: rgba(120,216,255,.1); color: var(--accent2); font-weight: 600; }
+.pay-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 4px; }
+.pay-btn {
+padding: 10px 4px; border-radius: 12px;
+border: 1px solid var(–border); background: var(–surface2);
+color: var(–text); font-size: 13px; cursor: pointer;
+font-family: ‘Noto Sans TC’, sans-serif;
+transition: all .15s;
+}
+.pay-btn.selected { border-color: var(–accent2); background: rgba(120,216,255,.1); color: var(–accent2); font-weight: 600; }
 
-  /* alert */
-  .toast {
-    position: fixed; top: 60px; left: 50%; transform: translateX(-50%) translateY(-80px);
-    background: var(--surface2); border: 1px solid var(--border);
-    border-radius: 20px; padding: 10px 20px;
-    font-size: 14px; font-weight: 500;
-    z-index: 300; white-space: nowrap;
-    transition: transform .3s cubic-bezier(.4,0,.2,1);
-  }
-  .toast.show { transform: translateX(-50%) translateY(0); }
+/* alert */
+.toast {
+position: fixed; top: 60px; left: 50%; transform: translateX(-50%) translateY(-80px);
+background: var(–surface2); border: 1px solid var(–border);
+border-radius: 20px; padding: 10px 20px;
+font-size: 14px; font-weight: 500;
+z-index: 300; white-space: nowrap;
+transition: transform .3s cubic-bezier(.4,0,.2,1);
+}
+.toast.show { transform: translateX(-50%) translateY(0); }
 
-  .empty-state {
-    display: flex; flex-direction: column; align-items: center;
-    padding: 60px 20px; color: var(--text3);
-    font-size: 14px; gap: 12px;
-  }
-  .empty-state .e-icon { font-size: 48px; opacity: .4; }
+.empty-state {
+display: flex; flex-direction: column; align-items: center;
+padding: 60px 20px; color: var(–text3);
+font-size: 14px; gap: 12px;
+}
+.empty-state .e-icon { font-size: 48px; opacity: .4; }
 
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: .5; }
-  }
-  .scanning-line {
-    position: absolute; left: 10%; right: 10%; height: 2px;
-    background: var(--accent);
-    box-shadow: 0 0 8px var(--accent);
-    animation: scanline 2s linear infinite;
-  }
-  @keyframes scanline {
-    0% { top: 20px; }
-    100% { top: calc(100% - 20px); }
-  }
+@keyframes pulse {
+0%, 100% { opacity: 1; }
+50% { opacity: .5; }
+}
+@keyframes spin {
+to { transform: rotate(360deg); }
+}
+.scanning-line {
+position: absolute; left: 10%; right: 10%; height: 2px;
+background: var(–accent);
+box-shadow: 0 0 8px var(–accent);
+animation: scanline 2s linear infinite;
+}
+@keyframes scanline {
+0% { top: 20px; }
+100% { top: calc(100% - 20px); }
+}
 </style>
+
 </head>
 <body>
 <div id="app">
@@ -480,184 +485,189 @@
           </div>
         </div>
 
-        <div class="stats-row">
-          <div class="stat-card">
-            <div class="s-label">本月支出</div>
-            <div class="s-val orange" id="month-total">$0</div>
-          </div>
-          <div class="stat-card">
-            <div class="s-label">筆數</div>
-            <div class="s-val green" id="month-count">0 筆</div>
-          </div>
-        </div>
-
-        <div class="section-title" style="margin-top:8px;">最近紀錄</div>
-        <div class="card" style="padding:0;overflow:hidden;">
-          <div id="recent-list">
-            <div class="empty-state"><div class="e-icon">📋</div><span>還沒有紀錄</span></div>
-          </div>
-        </div>
+```
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="s-label">本月支出</div>
+        <div class="s-val orange" id="month-total">$0</div>
+      </div>
+      <div class="stat-card">
+        <div class="s-label">筆數</div>
+        <div class="s-val green" id="month-count">0 筆</div>
       </div>
     </div>
 
-    <!-- RECORDS -->
-    <div class="page" id="page-records">
-      <div class="page-header">
-        <h1>紀錄</h1>
-      </div>
-      <div class="filter-row" id="filter-row">
-        <button class="filter-chip active" onclick="setFilter('all',this)">全部</button>
-      </div>
-      <div id="records-list"></div>
-    </div>
-
-    <!-- SCAN -->
-    <div class="page" id="page-scan">
-      <div class="page-header">
-        <h1>掃描發票</h1>
-        <div class="subtitle">掃描發票左側 QR Code</div>
-      </div>
-
-      <div class="scan-area" id="scanArea">
-        <div class="scan-placeholder" style="display:flex;flex-direction:column;align-items:center;gap:12px;">
-          <div class="scan-icon">📷</div>
-          <p>點擊下方按鈕<br>開始掃描發票 QR Code</p>
-        </div>
-        <video id="scanVideo" playsinline autoplay muted></video>
-        <canvas id="scanCanvas" style="display:none"></canvas>
-        <div class="scan-frame">
-          <div class="scan-corner tl"></div>
-          <div class="scan-corner tr"></div>
-          <div class="scan-corner bl"></div>
-          <div class="scan-corner br"></div>
-          <div class="scanning-line"></div>
-        </div>
-      </div>
-
-      <div style="padding: 0 16px; display:flex; gap:10px;" id="scan-btns">
-        <button class="btn btn-primary" onclick="startScan()" id="startScanBtn">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2"/><rect x="7" y="7" width="10" height="10" rx="1"/></svg>
-          開始掃描
-        </button>
-      </div>
-
-      <div id="scan-result-area" style="display:none; margin-top:16px;">
-        <div class="scan-result">
-          <h3>掃描結果</h3>
-          <div class="result-row"><span class="r-label">發票號碼</span><span class="r-val" id="r-invno">-</span></div>
-          <div class="result-row"><span class="r-label">日期</span><span class="r-val" id="r-date">-</span></div>
-          <div class="result-row"><span class="r-label">店家</span><span class="r-val" id="r-seller">-</span></div>
-          <div class="result-row"><span class="r-label">金額</span><span class="r-val" id="r-amount" style="color:var(--accent);font-size:18px;">-</span></div>
-        </div>
-        <div style="margin:12px 16px 0; display:flex; gap:10px;">
-          <button class="btn btn-secondary" onclick="resetScan()" style="flex:1">重新掃描</button>
-          <button class="btn btn-primary" onclick="confirmScan()" style="flex:2">確認存入</button>
-        </div>
-      </div>
-
-      <div class="card" style="margin-top:16px;">
-        <div style="font-size:13px;color:var(--text2);line-height:1.6;">
-          💡 <strong>掃描說明</strong><br>
-          請掃描紙本發票<strong>左側</strong>的 QR Code，可自動帶入日期、店家與金額。
-        </div>
+    <div class="section-title" style="margin-top:8px;">最近紀錄</div>
+    <div class="card" style="padding:0;overflow:hidden;">
+      <div id="recent-list">
+        <div class="empty-state"><div class="e-icon">📋</div><span>還沒有紀錄</span></div>
       </div>
     </div>
+  </div>
+</div>
 
-    <!-- STATS -->
-    <div class="page" id="page-stats">
-      <div class="page-header">
-        <h1>統計</h1>
-      </div>
-      <div class="seg-ctrl">
-        <button class="seg-btn active" onclick="setStatsTab('category',this)">消費類別</button>
-        <button class="seg-btn" onclick="setStatsTab('payment',this)">支付方式</button>
-      </div>
-      <div id="stats-category">
-        <div class="card">
-          <div class="pie-container">
-            <svg class="donut" width="200" height="200" viewBox="0 0 200 200" id="donut-svg">
-              <circle cx="100" cy="100" r="70" fill="none" stroke="var(--border)" stroke-width="32"/>
-              <text x="100" y="95" text-anchor="middle" fill="var(--text2)" font-size="12" font-family="Noto Sans TC">本月支出</text>
-              <text x="100" y="115" text-anchor="middle" fill="var(--text)" font-size="18" font-weight="700" font-family="DM Mono" id="donut-center">$0</text>
-            </svg>
-            <div class="legend" id="category-legend">
-              <div class="empty-state"><div class="e-icon">📊</div><span>還沒有資料</span></div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div id="stats-payment" style="display:none;">
-        <div class="card">
-          <div id="payment-bars">
-            <div class="empty-state"><div class="e-icon">💳</div><span>還沒有資料</span></div>
-          </div>
+<!-- RECORDS -->
+<div class="page" id="page-records">
+  <div class="page-header">
+    <h1>紀錄</h1>
+  </div>
+  <div class="filter-row" id="filter-row">
+    <button class="filter-chip active" onclick="setFilter('all',this)">全部</button>
+  </div>
+  <div id="records-list"></div>
+</div>
+
+<!-- SCAN -->
+<div class="page" id="page-scan">
+  <div class="page-header">
+    <h1>掃描發票</h1>
+    <div class="subtitle">拍照後自動辨識左側 QR Code</div>
+  </div>
+
+  <!-- 隱藏的 input 用來觸發相機 -->
+  <input type="file" id="scanInput" accept="image/*" capture="environment" style="display:none" onchange="handlePhoto(event)">
+
+  <!-- 預覽區 -->
+  <div class="scan-area" id="scanArea">
+    <div id="scan-placeholder" style="display:flex;flex-direction:column;align-items:center;gap:12px;">
+      <div class="scan-icon">🧾</div>
+      <p>點擊下方按鈕拍攝發票<br>程式會自動辨識 QR Code</p>
+    </div>
+    <img id="scanPreview" style="display:none;width:100%;border-radius:12px;object-fit:contain;max-height:300px;" alt="發票預覽">
+    <canvas id="scanCanvas" style="display:none"></canvas>
+    <div id="scanSpinner" style="display:none;flex-direction:column;align-items:center;gap:12px;">
+      <div style="width:40px;height:40px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;"></div>
+      <p style="color:var(--text2);font-size:14px;">辨識中...</p>
+    </div>
+  </div>
+
+  <div style="padding: 0 16px; display:flex; gap:10px;" id="scan-btns">
+    <button class="btn btn-primary" onclick="document.getElementById('scanInput').click()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+      拍攝發票
+    </button>
+  </div>
+
+  <div id="scan-result-area" style="display:none; margin-top:16px;">
+    <div class="scan-result">
+      <h3>辨識結果</h3>
+      <div class="result-row"><span class="r-label">發票號碼</span><span class="r-val" id="r-invno">-</span></div>
+      <div class="result-row"><span class="r-label">日期</span><span class="r-val" id="r-date">-</span></div>
+      <div class="result-row"><span class="r-label">店家</span><span class="r-val" id="r-seller">-</span></div>
+      <div class="result-row"><span class="r-label">金額</span><span class="r-val" id="r-amount" style="color:var(--accent);font-size:18px;">-</span></div>
+    </div>
+    <div style="margin:12px 16px 0; display:flex; gap:10px;">
+      <button class="btn btn-secondary" onclick="resetScan()" style="flex:1">重新拍攝</button>
+      <button class="btn btn-primary" onclick="confirmScan()" style="flex:2">確認存入</button>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px;">
+    <div style="font-size:13px;color:var(--text2);line-height:1.6;">
+      💡 <strong>拍攝技巧</strong><br>
+      對準發票<strong>左側</strong> QR Code，光線充足、拍清楚一點，辨識率更高。
+    </div>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="page" id="page-stats">
+  <div class="page-header">
+    <h1>統計</h1>
+  </div>
+  <div class="seg-ctrl">
+    <button class="seg-btn active" onclick="setStatsTab('category',this)">消費類別</button>
+    <button class="seg-btn" onclick="setStatsTab('payment',this)">支付方式</button>
+  </div>
+  <div id="stats-category">
+    <div class="card">
+      <div class="pie-container">
+        <svg class="donut" width="200" height="200" viewBox="0 0 200 200" id="donut-svg">
+          <circle cx="100" cy="100" r="70" fill="none" stroke="var(--border)" stroke-width="32"/>
+          <text x="100" y="95" text-anchor="middle" fill="var(--text2)" font-size="12" font-family="Noto Sans TC">本月支出</text>
+          <text x="100" y="115" text-anchor="middle" fill="var(--text)" font-size="18" font-weight="700" font-family="DM Mono" id="donut-center">$0</text>
+        </svg>
+        <div class="legend" id="category-legend">
+          <div class="empty-state"><div class="e-icon">📊</div><span>還沒有資料</span></div>
         </div>
       </div>
     </div>
-
-    <!-- SETTINGS -->
-    <div class="page" id="page-settings">
-      <div class="page-header"><h1>設定</h1></div>
-
-      <div class="settings-section">
-        <div class="settings-header">預算</div>
-        <div class="card" style="padding:0;overflow:hidden;">
-          <div class="setting-row" onclick="editBudget()">
-            <div class="s-row-info">
-              <div class="s-row-title">月預算</div>
-              <div class="s-row-sub">設定每月消費上限</div>
-            </div>
-            <div class="s-row-right" id="budget-display">$20,000</div>
-          </div>
-        </div>
+  </div>
+  <div id="stats-payment" style="display:none;">
+    <div class="card">
+      <div id="payment-bars">
+        <div class="empty-state"><div class="e-icon">💳</div><span>還沒有資料</span></div>
       </div>
+    </div>
+  </div>
+</div>
 
-      <div class="settings-section">
-        <div class="settings-header">顯示</div>
-        <div class="card" style="padding:0;overflow:hidden;">
-          <div class="setting-row">
-            <div class="s-row-info"><div class="s-row-title">深色模式</div></div>
-            <button class="toggle on" onclick="this.classList.toggle('on')"></button>
-          </div>
-          <div class="setting-row">
-            <div class="s-row-info"><div class="s-row-title">顯示小數點</div></div>
-            <button class="toggle" onclick="this.classList.toggle('on')"></button>
-          </div>
+<!-- SETTINGS -->
+<div class="page" id="page-settings">
+  <div class="page-header"><h1>設定</h1></div>
+
+  <div class="settings-section">
+    <div class="settings-header">預算</div>
+    <div class="card" style="padding:0;overflow:hidden;">
+      <div class="setting-row" onclick="editBudget()">
+        <div class="s-row-info">
+          <div class="s-row-title">月預算</div>
+          <div class="s-row-sub">設定每月消費上限</div>
         </div>
-      </div>
-
-      <div class="settings-section">
-        <div class="settings-header">類別管理</div>
-        <div class="card" style="padding:0;overflow:hidden;">
-          <div class="setting-row" onclick="showToast('功能開發中')">
-            <div class="s-row-info"><div class="s-row-title">自訂類別</div></div>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" style="color:var(--text3)"><path d="M9 18l6-6-6-6"/></svg>
-          </div>
-        </div>
-      </div>
-
-      <div class="settings-section">
-        <div class="settings-header">資料</div>
-        <div class="card" style="padding:0;overflow:hidden;">
-          <div class="setting-row" onclick="exportData()">
-            <div class="s-row-info"><div class="s-row-title">匯出資料</div></div>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" style="color:var(--text3)"><path d="M9 18l6-6-6-6"/></svg>
-          </div>
-          <div class="setting-row" onclick="clearData()">
-            <div class="s-row-info">
-              <div class="s-row-title" style="color:var(--red)">清除所有資料</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div style="text-align:center;padding:24px;color:var(--text3);font-size:12px;">
-        記帳 v1.0 · 資料儲存於本機
+        <div class="s-row-right" id="budget-display">$20,000</div>
       </div>
     </div>
   </div>
 
+  <div class="settings-section">
+    <div class="settings-header">顯示</div>
+    <div class="card" style="padding:0;overflow:hidden;">
+      <div class="setting-row">
+        <div class="s-row-info"><div class="s-row-title">深色模式</div></div>
+        <button class="toggle on" onclick="this.classList.toggle('on')"></button>
+      </div>
+      <div class="setting-row">
+        <div class="s-row-info"><div class="s-row-title">顯示小數點</div></div>
+        <button class="toggle" onclick="this.classList.toggle('on')"></button>
+      </div>
+    </div>
+  </div>
+
+  <div class="settings-section">
+    <div class="settings-header">類別管理</div>
+    <div class="card" style="padding:0;overflow:hidden;">
+      <div class="setting-row" onclick="showToast('功能開發中')">
+        <div class="s-row-info"><div class="s-row-title">自訂類別</div></div>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" style="color:var(--text3)"><path d="M9 18l6-6-6-6"/></svg>
+      </div>
+    </div>
+  </div>
+
+  <div class="settings-section">
+    <div class="settings-header">資料</div>
+    <div class="card" style="padding:0;overflow:hidden;">
+      <div class="setting-row" onclick="exportData()">
+        <div class="s-row-info"><div class="s-row-title">匯出資料</div></div>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" style="color:var(--text3)"><path d="M9 18l6-6-6-6"/></svg>
+      </div>
+      <div class="setting-row" onclick="clearData()">
+        <div class="s-row-info">
+          <div class="s-row-title" style="color:var(--red)">清除所有資料</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="text-align:center;padding:24px;color:var(--text3);font-size:12px;">
+    記帳 v1.0 · 資料儲存於本機
+  </div>
+</div>
+```
+
+  </div>
+
   <!-- Tab Bar -->
+
   <div class="tab-bar">
     <button class="tab active" onclick="goTo('home',this)">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
@@ -685,48 +695,53 @@
 </div>
 
 <!-- Add Modal -->
+
 <div class="modal-backdrop" id="add-modal">
   <div class="modal">
     <div class="modal-handle"></div>
     <h2>新增支出</h2>
 
-    <div class="form-group">
-      <label class="form-label">金額</label>
-      <input class="form-input" id="f-amount" type="number" inputmode="decimal" placeholder="0" style="font-size:24px;font-family:'DM Mono',monospace;font-weight:500;">
-    </div>
+```
+<div class="form-group">
+  <label class="form-label">金額</label>
+  <input class="form-input" id="f-amount" type="number" inputmode="decimal" placeholder="0" style="font-size:24px;font-family:'DM Mono',monospace;font-weight:500;">
+</div>
 
-    <div class="form-group">
-      <label class="form-label">名稱</label>
-      <input class="form-input" id="f-name" type="text" placeholder="例：午餐、星巴克...">
-    </div>
+<div class="form-group">
+  <label class="form-label">名稱</label>
+  <input class="form-input" id="f-name" type="text" placeholder="例：午餐、星巴克...">
+</div>
 
-    <div class="form-group">
-      <label class="form-label">類別</label>
-      <div class="cat-grid" id="cat-grid"></div>
-    </div>
+<div class="form-group">
+  <label class="form-label">類別</label>
+  <div class="cat-grid" id="cat-grid"></div>
+</div>
 
-    <div class="form-group">
-      <label class="form-label">支付方式</label>
-      <div class="pay-grid" id="pay-grid"></div>
-    </div>
+<div class="form-group">
+  <label class="form-label">支付方式</label>
+  <div class="pay-grid" id="pay-grid"></div>
+</div>
 
-    <div class="form-group">
-      <label class="form-label">日期</label>
-      <input class="form-input" id="f-date" type="date">
-    </div>
+<div class="form-group">
+  <label class="form-label">日期</label>
+  <input class="form-input" id="f-date" type="date">
+</div>
 
-    <div class="form-group">
-      <label class="form-label">備註（選填）</label>
-      <input class="form-input" id="f-note" type="text" placeholder="備註...">
-    </div>
+<div class="form-group">
+  <label class="form-label">備註（選填）</label>
+  <input class="form-input" id="f-note" type="text" placeholder="備註...">
+</div>
 
-    <button class="btn btn-primary" onclick="saveTransaction()">儲存</button>
-    <div style="height:8px"></div>
-    <button class="btn btn-secondary" onclick="closeModal()">取消</button>
+<button class="btn btn-primary" onclick="saveTransaction()">儲存</button>
+<div style="height:8px"></div>
+<button class="btn btn-secondary" onclick="closeModal()">取消</button>
+```
+
   </div>
 </div>
 
 <!-- Budget Modal -->
+
 <div class="modal-backdrop" id="budget-modal">
   <div class="modal">
     <div class="modal-handle"></div>
@@ -742,12 +757,15 @@
 </div>
 
 <!-- FAB -->
+
 <button class="fab" onclick="openModal()" id="fab">+</button>
 
 <!-- Toast -->
+
 <div class="toast" id="toast"></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jsQR/1.4.0/jsQR.min.js"></script>
+
 <script>
 // ── Data ──
 const CATEGORIES = [
@@ -916,50 +934,72 @@ function saveTransaction() {
 }
 
 // ── Scan ──
-function startScan() {
-  if (!navigator.mediaDevices) { showToast('此環境不支援相機'); return; }
-  navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
-    .then(stream => {
-      scanStream = stream;
-      const video = document.getElementById('scanVideo');
-      video.srcObject = stream;
-      document.getElementById('scanArea').classList.add('scanning');
-      document.getElementById('startScanBtn').textContent = '掃描中...';
-      document.getElementById('startScanBtn').disabled = true;
-      requestAnimationFrame(scanFrame);
-    })
-    .catch(() => showToast('無法存取相機，請允許權限'));
-}
+function handlePhoto(event) {
+  const file = event.target.files[0];
+  if (!file) return;
 
-function scanFrame() {
-  if (!scanStream) return;
-  const video = document.getElementById('scanVideo');
-  const canvas = document.getElementById('scanCanvas');
-  if (video.readyState === video.HAVE_ENOUGH_DATA) {
-    canvas.width = video.videoWidth;
-    canvas.height = video.videoHeight;
+  // 顯示預覽
+  const preview = document.getElementById('scanPreview');
+  const placeholder = document.getElementById('scan-placeholder');
+  const spinner = document.getElementById('scanSpinner');
+
+  const url = URL.createObjectURL(file);
+  preview.src = url;
+  preview.style.display = 'block';
+  placeholder.style.display = 'none';
+  spinner.style.display = 'flex';
+  document.getElementById('scan-btns').style.display = 'none';
+
+  // 讀取圖片並解析QR
+  const img = new Image();
+  img.onload = () => {
+    const canvas = document.getElementById('scanCanvas');
     const ctx = canvas.getContext('2d');
-    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-    const img = ctx.getImageData(0, 0, canvas.width, canvas.height);
-    const code = jsQR(img.data, img.width, img.height, { inversionAttempts: 'dontInvert' });
-    if (code) { processQR(code.data); return; }
-  }
-  requestAnimationFrame(scanFrame);
+
+    // 縮小圖片加快解析（最大 1200px）
+    const maxSize = 1200;
+    let w = img.width, h = img.height;
+    if (w > maxSize || h > maxSize) {
+      const ratio = Math.min(maxSize/w, maxSize/h);
+      w = Math.round(w*ratio); h = Math.round(h*ratio);
+    }
+    canvas.width = w; canvas.height = h;
+    ctx.drawImage(img, 0, 0, w, h);
+
+    const imageData = ctx.getImageData(0, 0, w, h);
+    const code = jsQR(imageData.data, w, h, { inversionAttempts: 'attemptBoth' });
+
+    spinner.style.display = 'none';
+
+    if (code) {
+      processQR(code.data);
+    } else {
+      showToast('找不到 QR Code，請重新拍攝');
+      resetScan();
+    }
+    URL.revokeObjectURL(url);
+  };
+  img.onerror = () => {
+    spinner.style.display = 'none';
+    showToast('圖片讀取失敗，請重試');
+    resetScan();
+  };
+  img.src = url;
+
+  // 清除 input 讓同一張可以重選
+  event.target.value = '';
 }
 
 function processQR(raw) {
-  stopScan();
-  // Taiwan e-invoice left QR format: invNo date randomNum sellerBan buyerBan enc amount1 amount2 ...
-  // Format: AB12345678:113/01/01:1234:12345678:00000000:AAAA:0:0:1:500:500:品項
   try {
     const parts = raw.split(':');
     if (parts.length >= 7) {
-      const invNo = parts[0]; // 發票號碼
-      const dateRaw = parts[1]; // yyy/mm/dd
+      const invNo = parts[0];
+      const dateRaw = parts[1];
       const amount = parseInt(parts[6]) || parseInt(parts[7]) || 0;
-      const seller = parts[4] !== '00000000' ? '統編：'+parts[4] : '一般商家';
+      const sellerBan = parts[3];
+      const seller = (sellerBan && sellerBan !== '00000000') ? '統編：'+sellerBan : '一般商家';
 
-      // convert ROC date to AD
       let dateStr = '';
       const dm = dateRaw.match(/(\d+)\/(\d+)\/(\d+)/);
       if (dm) {
@@ -975,10 +1015,10 @@ function processQR(raw) {
       document.getElementById('r-amount').textContent = '$'+amount.toLocaleString();
       scannedData = { invNo, date: dateStr, seller, amount };
 
-      document.getElementById('scan-btns').style.display = 'none';
       document.getElementById('scan-result-area').style.display = 'block';
+      showToast('辨識成功 ✓');
     } else {
-      showToast('無法辨識此 QR Code');
+      showToast('非發票 QR Code，請重試');
       resetScan();
     }
   } catch(e) {
@@ -987,16 +1027,13 @@ function processQR(raw) {
   }
 }
 
-function stopScan() {
-  if (scanStream) { scanStream.getTracks().forEach(t=>t.stop()); scanStream=null; }
-  document.getElementById('scanArea').classList.remove('scanning');
-  const btn = document.getElementById('startScanBtn');
-  btn.textContent = '開始掃描'; btn.disabled = false;
-}
+function stopScan() {}
 
 function resetScan() {
-  stopScan();
   scannedData = null;
+  document.getElementById('scanPreview').style.display = 'none';
+  document.getElementById('scan-placeholder').style.display = 'flex';
+  document.getElementById('scanSpinner').style.display = 'none';
   document.getElementById('scan-btns').style.display = 'flex';
   document.getElementById('scan-result-area').style.display = 'none';
 }
@@ -1140,5 +1177,6 @@ document.querySelectorAll('.modal-backdrop').forEach(bd => {
   bd.addEventListener('click', e => { if(e.target===bd) bd.classList.remove('open'); });
 });
 </script>
+
 </body>
 </html>
