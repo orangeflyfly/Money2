@@ -764,7 +764,7 @@ animation: scanline 2s linear infinite;
 
 <div class="toast" id="toast"></div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jsQR/1.4.0/jsQR.min.js"></script>
+<script src="https://unpkg.com/@zxing/library@0.19.1/umd/index.min.js"></script>
 
 <script>
 // ── Data ──
@@ -966,18 +966,23 @@ function handlePhoto(event) {
     canvas.width = w; canvas.height = h;
     ctx.drawImage(img, 0, 0, w, h);
 
-    const imageData = ctx.getImageData(0, 0, w, h);
-    const code = jsQR(imageData.data, w, h, { inversionAttempts: 'attemptBoth' });
-
-    spinner.style.display = 'none';
-
-    if (code) {
-      processQR(code.data);
-    } else {
-      showToast('找不到 QR Code，請重新拍攝');
-      resetScan();
-    }
-    URL.revokeObjectURL(url);
+    // 用 ZXing 解碼
+    const dataUrl = canvas.toDataURL('image/jpeg', 0.95);
+    const codeReader = new ZXing.BrowserQRCodeReader();
+    const imgEl = document.createElement('img');
+    imgEl.onload = async () => {
+      try {
+        const result = await codeReader.decodeFromImageElement(imgEl);
+        spinner.style.display = 'none';
+        processQR(result.getText());
+      } catch(e) {
+        spinner.style.display = 'none';
+        showToast('找不到 QR Code，請重新拍攝');
+        resetScan();
+      }
+      URL.revokeObjectURL(url);
+    };
+    imgEl.src = dataUrl;
   };
   img.onerror = () => {
     spinner.style.display = 'none';
